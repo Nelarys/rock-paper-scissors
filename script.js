@@ -34,23 +34,10 @@ function playRound(humanChoice, computerChoice) {
     computerScore++;
   }
   scoreContainer.textContent = `Human: ${humanScore} Computer: ${computerScore}`;
-}
 
-function playGame() {
-  for (let i = 0; i < 5; i++) {
-    let humanChoice = getHumanChoice();
-    let computerChoice = getComputerChoice();
-    console.group(`Round ${i + 1}`);
-    playRound(humanChoice, computerChoice);
-    console.groupEnd();
-  }
-
-  if (humanScore > computerScore) {
-    console.log("YOU WIN THE GAME!");
-  } else if (humanScore < computerScore) {
-    console.log("GAME OVER!");
-  } else {
-    console.log("IT'S A TIE!");
+  if (humanScore === 5 || computerScore === 5) {
+    const gameFinishedEvent = new CustomEvent("gameFinished");
+    document.dispatchEvent(gameFinishedEvent);
   }
 }
 
@@ -58,4 +45,9 @@ document.addEventListener("click", function (e) {
   const computerChoice = getComputerChoice();
   const humanChoice = e.target.id;
   playRound(humanChoice, computerChoice);
+});
+
+document.addEventListener("gameFinished", function () {
+  const resultContainer = document.querySelector("#result");
+  resultContainer.textContent = humanScore === 5 ? "You win!" : "You lose!";
 });
