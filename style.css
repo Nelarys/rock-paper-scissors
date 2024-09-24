@@ -6,3 +6,13 @@ button {
     padding: 10px 20px;
     border-radius: 10px;
 }
+
+div {
+    color: white;
+    font-size: 20px;
+}
+
+#result {
+    color: white;
+    margin-top: 20px;
+}

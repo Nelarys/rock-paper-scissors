@@ -1,3 +1,6 @@
+let humanScore = 0;
+let computerScore = 0;
+
 function getComputerChoice() {
   let choices = ["rock", "paper", "scissors"];
   return choices[Math.floor(Math.random() * 3)];
@@ -13,27 +16,27 @@ function getHumanChoice() {
   return choice;
 }
 
-function playGame() {
-  let humanScore = 0;
-  let computerScore = 0;
+function playRound(humanChoice, computerChoice) {
+  const resultContainer = document.querySelector("#result");
+  const scoreContainer = document.querySelector("#score");
 
-  function playRound(humanChoice, computerChoice) {
-    if (humanChoice === computerChoice) {
-      console.log("It's a tie!");
-    } else if (
-      (humanChoice == "rock" && computerChoice === "scissors") ||
-      (humanChoice == "paper" && computerChoice === "rock") ||
-      (humanChoice == "scissors" && computerChoice === "paper")
-    ) {
-      console.log(`You win! ${humanChoice} beats ${computerChoice}`);
-      humanScore++;
-    } else {
-      console.log(`You lose! ${computerChoice} beats ${humanChoice}`);
-      computerScore++;
-    }
-    console.log(`Human: ${humanScore} Computer: ${computerScore}`);
+  if (humanChoice === computerChoice) {
+    resultContainer.textContent = "It's a tie!";
+  } else if (
+    (humanChoice == "rock" && computerChoice === "scissors") ||
+    (humanChoice == "paper" && computerChoice === "rock") ||
+    (humanChoice == "scissors" && computerChoice === "paper")
+  ) {
+    resultContainer.textContent = `You win! ${humanChoice} beats ${computerChoice}`;
+    humanScore++;
+  } else {
+    resultContainer.textContent = `You lose! ${computerChoice} beats ${humanChoice}`;
+    computerScore++;
   }
+  scoreContainer.textContent = `Human: ${humanScore} Computer: ${computerScore}`;
+}
 
+function playGame() {
   for (let i = 0; i < 5; i++) {
     let humanChoice = getHumanChoice();
     let computerChoice = getComputerChoice();
@@ -51,4 +54,8 @@ function playGame() {
   }
 }
 
-// playGame();
+document.addEventListener("click", function (e) {
+  const computerChoice = getComputerChoice();
+  const humanChoice = e.target.id;
+  playRound(humanChoice, computerChoice);
+});
